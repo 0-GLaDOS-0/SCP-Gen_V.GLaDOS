@@ -1,0 +1,65 @@
+/*V 2.0*/
+body
+{
+    font-family: arial, Verdana, sans-serif;
+    font-size: 13pt;
+
+    width: 1000px;
+
+    color: black;
+    background: #ff9;
+}
+h1
+{
+    font-size: 20pt;
+}
+p
+{
+    margin: 0;
+}
+table img {
+    display: block;
+}
+#img-90 {
+    transform: rotate(90deg);
+}
+table {
+    border-collapse: collapse;
+    background: lightgrey; 
+    position: relative;
+    display: inline-table;
+    top: -90px;
+    table-layout: ;
+}
+.display_map
+{
+    position: absolute;
+}
+.board
+{
+    position: absolute;
+
+    display: inline-block;
+}
+.block_img
+{
+    position: relative;
+
+    width: 332px;
+    top: -90px;
+    margin-top: 10px;
+}
+.img_element
+{
+    position: relative;
+    padding-top: 4px;
+    padding-left: 2px;
+
+    background: grey;
+}
+.panel
+{
+    position: relative;
+
+    display: inline-block;
+}
