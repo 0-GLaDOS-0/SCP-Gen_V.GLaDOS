@@ -1,0 +1,40 @@
+/*V 1.0*/
+body
+{
+    font-family: arial, Verdana, sans-serif;
+    font-size: 13pt;
+
+    color: black;
+    background: #ff9;
+}
+h1
+{
+    font-size: 20pt;
+ 
+    color: black;
+}
+p {
+    font-size: 100%;
+    color: red;
+    border: 1px;
+    border-color: red;
+}
+.display_map {
+    position: absolute;
+
+}
+.table {
+    position: relative;
+}
+.block_img {
+    position: relative;
+    background: grey;
+    top: 10px;  
+    width:51%;
+}
+.img_element {
+    padding-top: 4px;
+    padding-left: 2px;
+    padding-right: 0px;
+    margin: 0px;
+}
