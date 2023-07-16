@@ -1,0 +1,74 @@
+/*V 3.0*/
+body
+{
+    font-family: arial, Verdana, sans-serif;
+    font-size: 13pt;
+
+    width: 1000px;
+
+    color: black;
+    background: #ff9;
+}
+h1
+{
+    font-size: 20pt;
+}
+p
+{
+    margin: 0;
+}
+table img 
+{
+    display: block;
+}
+#img-90 
+{
+    transform: rotate(90deg);
+}
+table 
+{
+    border-collapse: collapse;
+    background: lightgrey; 
+    position: static;
+    top: -90px;
+    table-layout: ;
+}
+.div_table 
+{
+    position: static;
+    display: inline-block;
+}
+.display_map
+{
+    position: static;
+}
+.board
+{
+    display: inline-block;
+    position: static;
+    width: 200%;
+
+}
+.block_img
+{
+    position: static;
+    display: block;
+}
+.img_element
+{
+    position: static;
+    display: block;
+    width: fit-content;
+    top: 0px;
+    border-collapse: separate;
+
+    background: grey;
+    border-spacing: 4px;
+}
+.panel
+{
+    position: relative;
+    vertical-align: top;
+
+    display: inline-block;
+}
