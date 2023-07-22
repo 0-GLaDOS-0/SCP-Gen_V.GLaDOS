@@ -1,0 +1,50 @@
+<!-- V 3.0 -->
+<!DOCTYPE html>
+<html">
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Визуализация</title>
+  <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="style_vizual_V3.1.css">
+  <!-- <style>
+      @import "/style/main.css" screen; условие для отображение конкретного стиля при открытии странице на ПК
+  </style> -->
+  <script async src="SCP-Gen_v.Web-site_V3.1.js"></script> <!-- async - означает что скрипт загрузиться паралельно основному документу -->
+ </head>
+ <body>
+  <h1>
+    <img src="favicon.png" alt="Favicon_img">
+  Веб-страница визуализации карты проэкта "SCP: Secret Lab."
+  </h1>
+  <!-- Комментарий -->
+  <div class="display_maps">
+    <div id="board" class="board">
+      <div id="div_table" class="div_table">
+        <table id="table" class='table' border="0" cellpadding="0">
+        </table>
+      </div>
+      <form class="panel">
+        <p id="showSeed">Сиид: </p>
+        <p id="showSeedNum">Номер Сида: </p>
+        <p id="showRing">Колец: </p>
+        <p id="showRoom">Количество комнат: </p>
+        <div><label for="seed">Введите ключ генерации</label></div>
+        <div><input type="seed" id="seed" placeholder="ПвЫk7EjY" maxlength="8" autofocus></div>
+        <input type="submit" onclick="start();" value="Сгенерировать">
+      </form>
+      <div class="block_img">
+        <table class="img_element" cellpadding="0">
+          <tr>
+            <td><img src="corridor_00.png" alt="corridor_00.png"></td>
+            <td><img src="corridor_01.png" alt="corridor_01.png"></td>
+            <td><img src="corridor_03.png" alt="corridor_03.png"></td>
+            <td><img src="corridor_05.png" alt="corridor_05.png"></td>
+            <td><img src="corridor_07.png" alt="corridor_07.png"></td>
+            <td><img src="corridor_15.png" alt="corridor_15.png"></td>
+          </tr>
+        </table>
+      </div> 
+    </div>
+  </div>
+ </body>
+</html>
