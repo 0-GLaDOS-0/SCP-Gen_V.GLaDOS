@@ -4,12 +4,13 @@
  <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>Визуализация</title>
-  <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
-  <link rel="stylesheet" href="style_vizual_V3.1.css">
+  <link rel="icon" href="favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="style_vizual_V3.2.css">
   <!-- <style>
       @import "/style/main.css" screen; условие для отображение конкретного стиля при открытии странице на ПК
   </style> -->
-  <script async src="SCP-Gen_v.Web-site_V3.1.js"></script> <!-- async - означает что скрипт загрузиться паралельно основному документу -->
+  <!-- <script type="module" src="./modules/Import_VARIABLE.js"></script> -->
+  <script async src="SCP-Gen_v.Web-site_V3.2.js"></script> <!-- async - означает что скрипт загрузиться паралельно основному документу -->
  </head>
  <body>
   <h1>
@@ -28,6 +29,7 @@
         <p id="showSeedNum">Номер Сида: </p>
         <p id="showRing">Колец: </p>
         <p id="showRoom">Количество комнат: </p>
+        <p id="showTime">Время генерации: </p>
         <div><label for="seed">Введите ключ генерации</label></div>
         <div><input type="seed" id="seed" placeholder="ПвЫk7EjY" maxlength="8" autofocus></div>
         <input type="submit" onclick="start();" value="Сгенерировать">

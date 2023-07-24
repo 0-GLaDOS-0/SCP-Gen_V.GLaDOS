@@ -1,4 +1,5 @@
 /*V 3.0*/
+
 //Обявление вспомогательных функций через методы объекта rundom
 const rundom = {
 	number(min, max) { //Возвращет случайное число в заданном диапазоне min-max
@@ -25,19 +26,37 @@ const strRepl = (str) => { //функция которая заменяет по
   return str;
 };
 
+const seedGen = (abc) => { //функция для гинерации сида из 8 случайных сиволов, если пользователь сам не ввёл его
+	let gen ='';
+	num = 0;
+
+	for (let i = 0; i < 8; i++) {
+		gen += abc[Math.floor( Math.random() * ((abc.length-1)/*max*/ - 0/*min*/ + 1)) + 0/*min*/]
+	};
+	gen = strRepl(gen); //преобразование сида заменой некоторых символов на похожие из англи раскладки
+	seed = gen;
+
+	 for (let i = 0; i < gen.length; i++) {//здесь seed воспринимаеться как число, записаное в системе счисления abc, этот цикл форм, написан по принципу перевода числа из одной системы счисления, в другую
+		num += abc.indexOf(gen[i]) * Math.pow(abc.length, gen.length-(1+i));
+	};
+  
+	return num;
+};
+
 const seedAdd = () => {//НАЧАЛО
 	let abc = " 0123456789|.,!№;%:?-=+;:~><|*()/AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZzАаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЬьЫыЭэЮюЯяІіЇїЄє";
 	globalThis.seed = document.getElementById("seed").value;
-	globalThis.seedNum = ""; //объявление ГЛОБАЛЬНОЙ ПЕРЕМЕННОЙ
+	globalThis.seedNum = 0; //объявление ГЛОБАЛЬНОЙ ПЕРЕМЕННОЙ
 
 	//преобразование сида
 	seed = strRepl(seed); //заменяет символы, для уменьшения путаницы
-	for (j=0;  (j < seed.length) && (j < 8); j++) { //функция функция которая вычисляет значение seedNum 
-		seedNum += abc.indexOf(seed[j]); //здесь мы ищем индекс символа из seed в словаре "abc", и складываем все индексы в одно число 
+
+	for (let i = 0; i < seed.length; i++) {//здесь seed воспринимаеться как число, записаное в системе счисления abc, этот цикл форм, написан по принципу перевода числа из одной системы счисления, в другую
+		seedNum += abc.indexOf(seed[i]) * Math.pow(abc.length, seed.length-(1+i));
 	};
   
-	seedNum = (seedNum || 455534396169); //Записывает в переменную значение 455534396169(GLaDOS), если значение seedNum равно 0, undefined, null
-  globalThis.seedHTML = seedNum;
+	seedNum = (seedNum || seedGen(abc)); //Записывает в переменную значение 455534396169(GLaDOS), если значение seedNum равно 0, undefined, null
+  globalThis.seedNumHTML = seedNum;
 
 	seedNum = { //оздание нового объекта в переменную seedNum, при этом старое знаечение переменной записывается как совойство нового объекта
 	  seed: +seedNum,
@@ -54,7 +73,7 @@ const ran = () => {
   return result
 };
 
-const is = {
+const is = { //Этот объкт с методами нужен для того что бы однозначно проверить являеться ли значение в переменной объектом или же другим каким-то объектом, возвращает логическое значение
 	Object (i) {return Object.prototype.toString.call(i) === '[object Object]'},
 	Array (i) {return Object.prototype.toString.call(i) === '[object Array]'},
 	Function (i) {return Object.prototype.toString.call(i) === '[object Function]'},
@@ -618,9 +637,10 @@ const visual = () => {
 
 	//Изменяет значение параметров в panel нф HTML странице
 	document.getElementById("showSeed").textContent = `Сиид: ${seed}`;
-	document.getElementById("showSeedNum").textContent = `Номер Сида: ${seedHTML}`
+	document.getElementById("showSeedNum").textContent = `Номер Сида: ${seedNumHTML}`
 	document.getElementById("showRing").textContent = `Колец: ${numberOfRings.length}`;
 	document.getElementById("showRoom").textContent = `Количество комнат: ${numberOfRooms}`;
+	document.getElementById("showTime").textContent = `Время генерации: ${timeFinish - timeStart}ms`;
 
 
 	for (i = 0; i < 10; i++) {
@@ -640,11 +660,17 @@ const visual = () => {
 		}
 	}
 };
-
+ 
+function sleep(ms) {
+    let time = new Date().getTime();
+    while (new Date().getTime() < time + ms);
+}
 
 //Пошговое выполнение
 const start = () => {
 	event.preventDefault(); //нужно только для того что бы страница не перезагружалась при нажатии "enter"
+
+	globalThis.timeStart = new Date(); // для замера скорости работы алгоритма
 
 	fillTable('clear');
 	seedAdd();
@@ -653,6 +679,7 @@ const start = () => {
 	const writingValues = []; //"список" количеств комнат для их сравнения
 	while (numberOfRooms < minRooms) {
 		visitRoom();
+		
 
 		writingValues.push(numberOfRooms); //Добавление значения numberOfRooms после последнего visitRoom
 
@@ -679,7 +706,10 @@ const start = () => {
 	genRing();
 	smoothing();
 	endRoom();
-	s15();
+	s15(); 
+
+	globalThis.timeFinish = new Date(); // для замера скорости работы алгоритма
+
 	visual();
 	con_visual();
 };
@@ -703,11 +733,11 @@ const fillTable = (mode='fill') => { //в зависимости от парам
 		fillTable();
 	} 
 	else if (mode=='fill') {
-		for (i = 9; i >= 0; i--) {
+		for (let i = 9; i >= 0; i--) {
 			let trElement = document.createElement('tr')
 			trElement.id = `${i}`
 
-			for (j = 0; j < 10; j++) {
+			for (let j = 0; j < 10; j++) {
 				let tdElement = document.createElement('td')
 				let c = `${i}` + `${j}`
 				tdElement.id = c

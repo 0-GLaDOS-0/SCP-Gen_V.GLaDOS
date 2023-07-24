@@ -39,7 +39,8 @@ table img
 }
 table 
 {
-    border-collapse: collapse; //Отвечает за разделение между ячейками таблицы
+    border-collapse: collapse; /*Отвечает за разделение между ячейками таблицы*/
+    border-color: lightgray; /*твечает за цвет линии которая обычно не показывается*/
     background: lightgrey; 
     position: static;
     top: -90px;
@@ -83,4 +84,4 @@ table
     vertical-align: top;
 
     display: inline-block;
-}
+} 
