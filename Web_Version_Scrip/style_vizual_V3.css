@@ -13,6 +13,24 @@ body
     color: black;
     background: #ff9;
 }
+.td_table
+{
+    position: static;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+}
+table p
+{
+    position: relative;
+    top: -37.5px;
+    color: black;
+    /*background: blue;*/
+    font-weight: 900;
+    /*transform: rotate(45deg);*/
+    text-align: center;
+    margin: 0px
+}
 h1
 {
     font-size: 30pt;
@@ -32,10 +50,6 @@ h1 img
 table img 
 {
     display: block;
-}
-#img-90 
-{
-    transform: rotate(90deg);
 }
 table 
 {
@@ -82,6 +96,5 @@ table
 {
     position: relative;
     vertical-align: top;
-
     display: inline-block;
 } 
