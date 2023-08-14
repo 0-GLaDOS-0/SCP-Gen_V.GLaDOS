@@ -676,6 +676,13 @@ const visual = () => {
 	document.getElementById("showRoom").textContent = `Количество комнат: ${counter.ofRooms}`;
 	document.getElementById("showTime").textContent = `Время генерации: ${timeFinish - timeStart}ms`;
 
+	let form = document.querySelector("form.panel");
+	let data = new FormData(form);
+	let dataObject = {};
+	let [arreyShowCod] = data.entries(); //Диструктурирующие присваивание позволяет достать данные из Итератора data.entries() без использования for..of
+	// В будующем панель будет расширяться новыми переключателями, поэтому строчку выше нужно переделать через for..of
+	dataObject[arreyShowCod[0]] = arreyShowCod[1]; 
+	console.log(dataObject); 
 
 	for (i = 0; i < 10; i++) {
 		for (j = 0; j < 10; j++) {
@@ -691,9 +698,10 @@ const visual = () => {
 
 				img.setAttribute('src', `${file_img}`);
 				img.setAttribute('alt', `corridor_${s15}`);
-				img.setAttribute('style', `transform: rotate(${rotate}deg)`);
+				img.setAttribute('style', `transform: rotate(${rotate}deg)`);				
 
-				if (!(cod === null)) {writeCod(textCordRoom)}; //Добавляет элемент с текстом в элемент таблицы 
+				if (!(cod === null) && 
+				dataObject.codShow === 'On') {writeCod(textCordRoom)}; //Добавляет элемент с текстом в элемент таблицы 
 			}
 		}
 	}

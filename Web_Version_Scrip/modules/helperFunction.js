@@ -1,3 +1,20 @@
+/*export*/ const codShow = {
+	On () {
+		let elementsCod = Array.from(document.querySelectorAll(".cod"));
+		
+		for (let p of elementsCod) {
+			p.removeAttribute("hidden", '');
+		}
+	},
+	Off () {
+		let elementsCod = Array.from(document.querySelectorAll(".cod"));
+
+		for (let p of elementsCod) {
+			p.setAttribute("hidden", '');
+		}
+	}
+};
+
 /*export*/ const editArgum = (obj, Arg, parm) => {//Эта функция нужна для изменения свойств обекта passageInformation. тобавляя эту функцию мы уменьшаем количество кода
 	if (is.Array(Arg)) { //Если переданный в функцию параметр Arg являеться масивом с названиями параметрами в нутри, то функция будет использовать цикл for для перебора этих названий
 		for (let argum of Arg) { //Цик помогает ещё сократить количество строк в коде, что бы не вызывать функцию editArgum четыре разаа, мы передадим в один вызов функции, те параметры которые должны быть с одинаковыми значениями
@@ -96,6 +113,7 @@
 	let p = document.createElement('p');
 
 	p.textContent = cod;
+	p.setAttribute("class", "cod");
 
 	td.append(p);
 };

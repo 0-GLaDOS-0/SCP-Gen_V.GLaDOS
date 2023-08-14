@@ -98,3 +98,14 @@ table
     vertical-align: top;
     display: inline-block;
 } 
+.inputBlock
+{
+    display: block;
+    margin: 2px;
+}
+.radioInline
+{
+    display: inline; 
+    width: 17px; 
+    height: 17px;
+}

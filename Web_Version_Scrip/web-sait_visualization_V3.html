@@ -33,9 +33,18 @@
         <p id="showRing">Колец: </p>
         <p id="showRoom">Количество комнат: </p>
         <p id="showTime">Время генерации: </p>
-        <div><label for="seed">Введите ключ генерации</label></div>
-        <div><input type="seed" id="seed" placeholder="ПвЫk7EjY" maxlength="8" autofocus></div>
-        <input type="submit" onclick="start();" value="Сгенерировать">
+        <div>
+          <label for="radiobaton">Показать коды</label>
+          <div class="radioCodShow">
+            <input type="radio" id="showOn" class="radioInline" name="codShow" value="On">
+            <label for="codShowON" style="vertical-align: top;">Да</label>
+            <input type="radio" id="showOff" class="radioInline" name="codShow" value="Off" checked>
+            <label for="codShowOFF" style="vertical-align: top;">Нет</label>
+          </div>
+        </div>
+        <div><label for="seed">Введите ключ генерации</label>
+          <input type="seed" id="seed" class="inputBlock" placeholder="ПвЫk7EjY" maxlength="8" autofocus>
+          <input type="submit" onclick="start();" class="inputBlock" value="Сгенерировать"></div>
       </form>
       <div class="block_img">
         <table class="img_element" cellpadding="0">
@@ -51,5 +60,7 @@
       </div> 
     </div>
   </div>
+  <script>document.getElementById("showOn").addEventListener("click", codShow.On);
+document.getElementById("showOff").addEventListener("click", codShow.Off)</script>
  </body>
 </html>
