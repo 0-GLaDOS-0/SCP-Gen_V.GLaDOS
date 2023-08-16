@@ -6,11 +6,9 @@ const seedAdd = () => {
 	globalThis.seedNum = 0; //объявление ГЛОБАЛЬНОЙ ПЕРЕМЕННОЙ
 
 	//преобразование сида
-	seed = strRepl(seed); //заменяет символы, для уменьшения путаницы
+	seed = strReplace(seed); //заменяет символы, для уменьшения путаницы
 
-	for (let i = 0; i < seed.length; i++) {//здесь seed воспринимаеться как число, записаное в системе счисления abc, этот цикл форм, написан по принципу перевода числа из одной системы счисления, в другую
-		seedNum += abc.indexOf(seed[i]) * Math.pow(abc.length, seed.length-(1+i));
-	};
+	seedNum = seedToNum(seed, abc);
   
 	seedNum = (seedNum || seedGen(abc)); //Записывает в переменную значение 455534396169(GLaDOS), если значение seedNum равно 0, undefined, null
   globalThis.seedNumHTML = seedNum; //запоминает текущее числовое значение, для того что бы потом вывести его на HTML-странице
@@ -103,10 +101,10 @@ const visitRoom = () => {
 
 		let room = floorPlan[cordRoom];
 		let changedRoom = floorPlan[cordRoom].changed;
-		let up = floorPlan[cordRoom].passageInformation.up;
-		let right = floorPlan[cordRoom].passageInformation.right;
-		let down = floorPlan[cordRoom].passageInformation.down;
-		let left = floorPlan[cordRoom].passageInformation.left;
+		let upGateway = floorPlan[cordRoom].passageInformation.up;
+		let rightGateway = floorPlan[cordRoom].passageInformation.right;
+		let downGateway = floorPlan[cordRoom].passageInformation.down;
+		let leftGateway = floorPlan[cordRoom].passageInformation.left;
 		let upRoom = floorPlan[cordRoom + 10];
 		let rightRoom = floorPlan[cordRoom + 1];
 		let downRoom = floorPlan[cordRoom - 10];
@@ -117,7 +115,7 @@ const visitRoom = () => {
 			let changedUpRoom = floorPlan[cordRoom + 10].changed; //для удобства
 
 			if (changedRoom != false &&
-				up == true &&
+				upGateway == true &&
 				changedUpRoom == false) { //если наша комната существует (у неё не null тип) и у нашей комнаты есть проход на верх и верхняя комната не существует (имеет null тип)
 				editCell.upRoom(upRoom) //тогда изменяем верхнюю комнату 
 			}
@@ -127,7 +125,7 @@ const visitRoom = () => {
 			let changedRightRoom = floorPlan[cordRoom + 1].changed;
 
 			if (changedRoom != false &&
-				right == true &&
+				rightGateway == true &&
 				changedRightRoom == false) {
 				editCell.rightRoom(rightRoom)
 			}
@@ -138,7 +136,7 @@ const visitRoom = () => {
 			let changedDownRoom = floorPlan[cordRoom - 10].changed;
 
 			if (changedRoom != false &&
-				down == true &&
+				downGateway == true &&
 				changedDownRoom == false) {
 				editCell.downRoom(downRoom)
 			}
@@ -148,7 +146,7 @@ const visitRoom = () => {
 			let changedLeftRoom = floorPlan[cordRoom - 1].changed
 
 			if (changedRoom != false &&
-				left == true &&
+				leftGateway == true &&
 				changedLeftRoom == false) {
 				editCell.leftRoom(leftRoom)
 			}
@@ -193,7 +191,7 @@ const editCell = {
 	}
 };
 const genRing = () => {
-	for (cordRoom = 12; cordRoom < 89; cordRoom++) {
+	for (cordRoom = 12; cordRoom < 89; cordRoom++) { //3.1
 
 		if (cordRoom % 10 != 9 && 
 			cordRoom % 10 != 0) {
@@ -230,10 +228,10 @@ const genRing = () => {
 				changedDownLeftRoom == true &&
 				changedLeftUpRoom == true) {
 
-				floorPlan[cordRoom] = JSON.parse( JSON.stringify(roomSample) ); //Замена центральной комнаты в квадрате заполненом комнатами 3х3
+				floorPlan[cordRoom] = coppyObject(roomSample); //3.1.2
 				floorPlan[cordRoom].coords = cordRoom;
 
-				let arrayRoom = [upRoomPasInfo, rightRoomPasInfo, downRoomPasInfo, leftRoomPasInfo];
+				let arrayRoom = [upRoomPasInfo, rightRoomPasInfo, downRoomPasInfo, leftRoomPasInfo]; //3.1.3
 				let arrayArg = ['down', 'left', 'up', 'right'];
 				for (let room of arrayRoom) {
 					let index = arrayRoom.indexOf(room);
@@ -241,7 +239,7 @@ const genRing = () => {
 				};
 
 
-				//Делает кольцо 3х3, изменяя параметры шлюзов начиная с левого верхней комнаты, заканчивая правым шлюзом левой-верхней комнаты
+				//3.1.4
 				arrayRoom = [upRoomPasInfo, upRightRoomPasInfo, rightRoomPasInfo, rightDownRoomPasInfo, downRoomPasInfo, downLeftRoomPasInfo, leftRoomPasInfo, leftUpRoomPasInfo];
 				arrayArg = [['left', 'right'], ['left', 'down'], ['up', 'down'], ['up', 'left'], ['right', 'left'], ['right', 'up'], ['down', 'up'], ['down', 'right']];
 				for (let room of arrayRoom) {
@@ -249,8 +247,7 @@ const genRing = () => {
 					editArgum(room, arrayArg[index], true)
 				};
 
-				counter.ofRings.push(cordRoom);
-				/*console.log('>' + cordRoom);*/
+				counter.ofRings.push(cordRoom); //3.2
 			}
 		}
 	}
@@ -402,8 +399,8 @@ const endRoom = () => {
 		};
 	};
 };
-const s15 = () => {
-	for (cordRoom = 0; cordRoom <= 99; cordRoom++) {
+const extraOptions = () => {
+	for (cordRoom = 0; cordRoom <= 99; cordRoom++) { //6.
 
 		let upGateway = floorPlan[cordRoom].passageInformation.up;
 		let rightGateway = floorPlan[cordRoom].passageInformation.right;
@@ -611,9 +608,9 @@ const specialRooms = (objectSpecialRoom, counterCOPY) => {		//Эта функц�
 	let unique = objectSpecialRoom.unique;
 	let selectOfElement = counterCOPY[objectSpecialRoom.counter]; //сылка на масив счёткика, "[i.counter]" - определяет какой конкретно нам нужен счётчик из свойства объекта manifestRoom
 
-	if (unique) { //Если комната уникальна, то генерируем только её одну
+	if (unique) { 
 		
-		if (selectOfElement.length > 0) { //Заканчиваем гинерацию комнат, т.к. закончились Возможные варианты
+		if (selectOfElement.length > 0) { 
 			let indexCordRoom = rundom.number(0, (selectOfElement.length - 1)); 
 			let cordRoom = selectOfElement[indexCordRoom];
 			let room = floorPlan[cordRoom];
@@ -622,14 +619,14 @@ const specialRooms = (objectSpecialRoom, counterCOPY) => {		//Эта функц�
 			room.structure = objectSpecialRoom.structure;
 
 			counter.ofSpecialRooms.push(cordRoom);
-			selectOfElement.splice(indexCordRoom, 1); //Удаляет комнату из счётчика , что бы одна комната не попалась два раза
+			selectOfElement.splice(indexCordRoom, 1); 
 		}
 
-	} else if (!(unique)) { //если комната не уникальна то ....
+	} else if (!(unique)) { 
 
 		let maxRoom = objectSpecialRoom.max;
 		let minRoom = objectSpecialRoom.min;
-		let quantityRoom = rundom.number(minRoom, maxRoom); //...Выбираем сколько комнат даного типа заспавниться, взависимости от чисел min и max
+		let quantityRoom = rundom.number(minRoom, maxRoom); 
 		
 		if (maxRoom === 0) { //Если maxRoom равне нулю, это означает что комнаты должны сгенерироваться обязательно на месте тех комнат которые имеют такой же с15
 			//тут должны генерироваться тупики из офисов, во всех конечных комнатах зоны
@@ -638,7 +635,7 @@ const specialRooms = (objectSpecialRoom, counterCOPY) => {		//Эта функц�
 	
 		if (selectOfElement.length >= quantityRoom &&
 			quantityRoom !== 0) {
-			for (let i = 0; i < quantityRoom; i++) { //Повторим генерацию 1 комнаты столько раз сколько указано quantityRoom
+			for (let i = 0; i < quantityRoom; i++) { 
 
 				let indexCordRoom = rundom.number(0, (selectOfElement.length - 1)); //Выбираеться случайный индекс, и поэтому индексу достаёться комната из масива, "-1" нужен для того что бы в случаи когда в selectOfElement 1 елемент - генерируется ошибка
 				let cordRoom = selectOfElement[indexCordRoom];
@@ -676,13 +673,14 @@ const visual = () => {
 	document.getElementById("showRoom").textContent = `Количество комнат: ${counter.ofRooms}`;
 	document.getElementById("showTime").textContent = `Время генерации: ${timeFinish - timeStart}ms`;
 
+	//Эта часть считывает значение радиобатона при нажатии на кнопку submit
 	let form = document.querySelector("form.panel");
 	let data = new FormData(form);
-	let dataObject = {};
+	let dataFormObject = {};
 	let [arreyShowCod] = data.entries(); //Диструктурирующие присваивание позволяет достать данные из Итератора data.entries() без использования for..of
 	// В будующем панель будет расширяться новыми переключателями, поэтому строчку выше нужно переделать через for..of
-	dataObject[arreyShowCod[0]] = arreyShowCod[1]; 
-	console.log(dataObject); 
+	dataFormObject[arreyShowCod[0]] = arreyShowCod[1]; 
+	console.log(dataFormObject); 
 
 	for (i = 0; i < 10; i++) {
 		for (j = 0; j < 10; j++) {
@@ -700,8 +698,7 @@ const visual = () => {
 				img.setAttribute('alt', `corridor_${s15}`);
 				img.setAttribute('style', `transform: rotate(${rotate}deg)`);				
 
-				if (!(cod === null) && 
-				dataObject.codShow === 'On') {writeCod(textCordRoom)}; //Добавляет элемент с текстом в элемент таблицы 
+				if (!(cod === null)) {writeCod(textCordRoom, dataFormObject)}; //Добавляет элемент с текстом в элемент таблицы 
 			}
 		}
 	}
@@ -751,7 +748,7 @@ const start = () => {
 		genRing();
 		smoothing();
 		endRoom();
-		s15(); 
+		extraOptions(); 
 	} while (counter.ofCorridor01.length <= 2);
 	
 	do {
@@ -769,7 +766,7 @@ const start = () => {
 		};
 
 		preoritySpecialRooms(/*zone*/)
-	} while (chekKeysRoom(/*zone*/).length < manifestRoom.keysRoom[/*zone*/'L']);//Возвращает массив из ключевых комнат для данной зоны
+	} while (chekKeysRoom(/*zone*/));//Возвращает массив из ключевых комнат для данной зоны
 	
 	globalThis.timeFinish = new Date(); // для замера скорости работы алгоритма
 

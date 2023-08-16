@@ -111,10 +111,10 @@ const visitRoom = () => {
 
 		let room = floorPlan[cordRoom];
 		let typeRoom = floorPlan[cordRoom].type;
-		let up = floorPlan[cordRoom].passageInformation.up;
-		let right = floorPlan[cordRoom].passageInformation.right;
-		let down = floorPlan[cordRoom].passageInformation.down;
-		let left = floorPlan[cordRoom].passageInformation.left;
+		let upGateway = floorPlan[cordRoom].passageInformation.up;
+		let rightGateway = floorPlan[cordRoom].passageInformation.right;
+		let downGateway = floorPlan[cordRoom].passageInformation.down;
+		let leftGateway = floorPlan[cordRoom].passageInformation.left;
 		let upRoom = floorPlan[cordRoom + 10];
 		let rightRoom = floorPlan[cordRoom + 1];
 		let downRoom = floorPlan[cordRoom - 10];
@@ -125,7 +125,7 @@ const visitRoom = () => {
 			let typeUpRoom = floorPlan[cordRoom + 10].type; //для удобства
 
 			if (typeRoom != null &&
-				up == true &&
+				upGateway == true &&
 				typeUpRoom == null) { //если наша комната существует (у неё не null тип) и у нашей комнаты есть проход на верх и верхняя комната не существует (имеет null тип)
 				edit.Cell.upRoom(upRoom) //тогда изменяем верхнюю комнату 
 			}
@@ -135,7 +135,7 @@ const visitRoom = () => {
 			let typeRightRoom = floorPlan[cordRoom + 1].type;
 
 			if (typeRoom != null &&
-				right == true &&
+				rightGateway == true &&
 				typeRightRoom == null) {
 				edit.Cell.rightRoom(rightRoom)
 			}
@@ -146,7 +146,7 @@ const visitRoom = () => {
 			let typeDownRoom = floorPlan[cordRoom - 10].type;
 
 			if (typeRoom != null &&
-				down == true &&
+				downGateway == true &&
 				typeDownRoom == null) {
 				edit.Cell.downRoom(downRoom)
 			}
@@ -156,7 +156,7 @@ const visitRoom = () => {
 			let typeLeftRoom = floorPlan[cordRoom - 1].type
 
 			if (typeRoom != null &&
-				left == true &&
+				leftGateway == true &&
 				typeLeftRoom == null) {
 				edit.Cell.leftRoom(leftRoom)
 			}
